@@ -6,11 +6,11 @@ interface MyCardContainerProps {
   children?: React.ReactNode;
   className?: string;
 }
-export default function MyCardContainer({
+export default function MyCardContainer2({
   children,
   className,
 }: MyCardContainerProps) {
-  const { setNodeRef, isOver } = useDroppable({ id: 'droppable-1' });
+  const { setNodeRef, isOver } = useDroppable({ id: 'droppable-2' });
 
   return (
     <Card
