@@ -1,17 +1,21 @@
 'use client';
 import { DndContext, DragOverlay, UniqueIdentifier } from '@dnd-kit/core';
 import MyCard from './my-card';
-import MyCardContainer from './my-card-container';
 import { useState } from 'react';
-import MyCardContainer2 from './my-card-container2';
 import MyDraggableCard from './my-draggable-card';
+import MyDroppableCardContainer from './my-droppable-card-container';
+import { restrictToWindowEdges } from '@dnd-kit/modifiers';
 
 export default function BasicDragDrop() {
   const [overId, setOverId] = useState<UniqueIdentifier>();
 
   return (
     <div className="w-full h-full overflow-hidden relative">
-      <DndContext id="my-basic-dnd" onDragEnd={e => setOverId(e.over?.id)}>
+      <DndContext
+        id="my-basic-dnd"
+        onDragEnd={e => setOverId(e.over?.id)}
+        modifiers={[restrictToWindowEdges]}
+      >
         {!overId && (
           <MyDraggableCard
             id="drag-1"
@@ -20,23 +24,31 @@ export default function BasicDragDrop() {
             ID 1
           </MyDraggableCard>
         )}
-        <MyCardContainer className="absolute top-20 right-1/4">
+        <MyDroppableCardContainer
+          id="droppable-1"
+          className="absolute top-20 right-1/4"
+        >
           {overId === 'droppable-1' && (
             <MyDraggableCard id="drag-1" className="cursor-grab">
               ID 1
             </MyDraggableCard>
           )}
-        </MyCardContainer>
-        <MyCardContainer2 className="absolute top-20 right-1/2">
+        </MyDroppableCardContainer>
+        <MyDroppableCardContainer
+          id="droppable-2"
+          className="absolute top-20 right-1/2"
+        >
           {overId === 'droppable-2' && (
             <MyDraggableCard id="drag-1" className="cursor-grab">
               ID 1
             </MyDraggableCard>
           )}
-        </MyCardContainer2>
+        </MyDroppableCardContainer>
 
         <DragOverlay>
-          <MyCard className="cursor-grab">ID 1</MyCard>
+          <MyCard className="border border-amber-500 cursor-grabbing">
+            ID 1
+          </MyCard>
         </DragOverlay>
       </DndContext>
     </div>

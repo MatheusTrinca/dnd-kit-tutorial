@@ -11,10 +11,11 @@ interface MyCardProps {
 }
 export default function MyDraggableCard({
   children,
-  className,
   id,
+  className,
 }: MyCardProps) {
-  const { setNodeRef, listeners, transform, attributes } = useDraggable({ id });
+  const { setNodeRef, listeners, transform, attributes, isDragging } =
+    useDraggable({ id });
 
   const style: CSSProperties | undefined = transform
     ? {
@@ -26,7 +27,7 @@ export default function MyDraggableCard({
     <MyCard
       style={style}
       ref={setNodeRef}
-      className={cn('w-32', className)}
+      className={cn({ 'opacity-0': isDragging }, className)}
       listeners={listeners}
       attributes={attributes}
     >
